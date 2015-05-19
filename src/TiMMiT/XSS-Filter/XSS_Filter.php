@@ -1,11 +1,11 @@
 <?php
 /**
- * Bestand welke de XSSFilter Class bevat
+ * File that contains the XSS_Filter class
  */
 namespace TiMMiT;
 
 /**
- * De XSSFilter class van de OfferteTool gebaseerd op Based on: https://raw.githubusercontent.com/symphonycms/xssfilter/master/extension.driver.php
+ * De XSS_Filter Based on: https://raw.githubusercontent.com/symphonycms/xssfilter/master/extension.driver.php
  */
 	class XSS_Filter {
 		
@@ -31,7 +31,7 @@ namespace TiMMiT;
 		 * Check GLOBALS
 		 *
 		 * @return boolean
-		 *  True if XSS is detected, false otherwise
+		 *  true if XSS is detected, false otherwise
 		 */
 		public static function check4XSSInRequestArrays() {
 			if(self::detectXSSInArray($_POST)){
