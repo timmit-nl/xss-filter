@@ -1,0 +1,13 @@
+{
+	"name": "timmit/xss-filter",
+	"description": "basic XSS Filter, based on symfony xss filter",
+	"autoload": {
+		"files": ["TiMMiT\\XSS-Filter\\XSS_Filter.php"]
+	},
+	"authors": [
+		{
+			"name": "TiMMiT",
+			"homepage": "http://www.TiMMiT.nl"
+		}
+	]
+}
