@@ -95,9 +95,9 @@ namespace TiMMiT;
 
 			// Convert Hexadecimals
 			//$string = preg_replace('!(&#|\\\)[xX]([0-9a-fA-F]+);?!e','chr(hexdec("$2"))', $string);
-			$string = preg_replace_callback('!(&#|\\\)[xX]([0-9a-fA-F]+);?!e',
+			$string = preg_replace_callback('!(&#|\\\)[xX]([0-9a-fA-F]+);?!',
 				function($matches) {
-					return chr(hexdec($matches[2]);
+					return chr(hexdec($matches[2]));
 				},
 				$string);
 
