@@ -1,7 +1,7 @@
 {
 	"name": "timmit/xss-filter",
 	"description": "basic XSS Filter, based on symfony xss filter",
-	"version": "v1.0.0",
+	"version": "v1.0.3",
 	"keywords": ["xss", "filter"],
 	"license": "MIT",
 	"autoload": {
