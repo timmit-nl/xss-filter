@@ -8,11 +8,15 @@ namespace TiMMiT;
  * De XSS_Filter Based on: https://raw.githubusercontent.com/symphonycms/xssfilter/master/extension.driver.php
  */
 	class XSS_Filter {
-		
 		/**
- 		* Over, legacy
- 		* @return array
- 		*/	
+		 * @var boolean match all known html tags
+		 */
+		protected static $matchAllTags = true;
+
+		/**
+		* Over, legacy
+		* @return array
+		*/
 		public function about() {
 			return array(
 				'name' => 'Cross-Site Scripting (XSS) Filter',
@@ -38,7 +42,7 @@ namespace TiMMiT;
 				return TRUE;
 			}
 			if(self::detectXSSInArray($_GET)){
-				return TRUE;				
+				return TRUE;
 			}
 			if(self::detectXSSInArray($_COOKIE)){
 				return TRUE;
@@ -102,13 +106,13 @@ namespace TiMMiT;
 				$string);
 
 			// Clean up entities
-			//$string = preg_replace('!(&#0+[0-9]+)!','$1;',$string);
-			$string = preg_replace_callback('!(&#0+[0-9]+)!',
-				function($matches) {
-					return $matches[1];
-				},
-				$string);
-				
+			$string = preg_replace('!(&#0+[0-9]+)!','$1;',$string);
+			// $string = preg_replace_callback('!(&#0+[0-9]+)!',
+			// 	function($matches) {
+			// 		return $matches[1];
+			// 	},
+			// 	$string);
+
 			// Decode entities
 			$string = html_entity_decode($string, ENT_NOQUOTES, 'UTF-8');
 
@@ -127,16 +131,24 @@ namespace TiMMiT;
 				// Match style attributes
 				'#(<[^>]+[\x00-\x20\"\'\/])style=[^>]*>?#iUu',
 
-				// Match unneeded tags
-				'#</*(applet|meta|xml|blink|link|style|script|embed|object|iframe|frame|frameset|ilayer|layer|bgsound|title|base)[^>]*>?#i'
+				// Match href attributes
+				'#(<[^>]+[\x00-\x20\"\'\/])href=[^>]*>?#iUu',
 			);
+
+			if(self::$matchAllTags){
+				$patterns[] = '#</*(a|abbr|acronym|address|applet|area|article|aside|audio|b|base|basefont|bdi|bdo|big|blockquote|body|br|button|canvas|caption|center|cite|code|col|colgroup|data|datalist|dd|del|details|dfn|dialog|dir|div|dl|dt|em|embed|fieldset|figcaption|figure|font|footer|form|frame|frameset|h1|h2|h3|h4|h5|h6|head|header|hr|html|i|iframe|img|input|ins|kbd|label|legend|li|link|main|map|mark|meta|meter|nav|noframes|noscript|object|ol|optgroup|option|output|p|param|picture|pre|progress|q|rp|rt|ruby|s|samp|script|section|select|small|source|span|strike|strong|style|sub|summary|sup|svg|table|tbody|td|template|textarea|tfoot|th|thead|time|title|tr|track|tt|u|ul|var|video|wbr)[^>]*>?#i';
+			} else {
+				$patterns[] = '#</*(applet|meta|xml|blink|link|style|script|embed|object|iframe|frame|frameset|ilayer|layer|bgsound|title|base)[^>]*>?#i';
+			}
 
 			foreach($patterns as $pattern) {
 				// Test both the original string and clean string
 				if(preg_match($pattern, $string) || preg_match($pattern, $orig)){
 					$contains_xss = TRUE;
 				}
-				if ($contains_xss === TRUE) return TRUE;
+				if($contains_xss === TRUE){
+					return TRUE;
+				}
 			}
 
 			return FALSE;
