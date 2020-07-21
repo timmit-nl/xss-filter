@@ -13,17 +13,18 @@ use voku\helper\AntiXSS;
 		/**
 		 * Check GLOBALS
 		 *
+		 * @param boolean $overwriteWithCleanedValues true then clean the GLOBAL array's
 		 * @return boolean
 		 *  true if XSS is detected, false otherwise
 		 */
-		public static function check4XSSInRequestArrays() {
-			if(self::detectXSSInArray($_POST)){
+		public static function check4XSSInRequestArrays($overwriteWithCleanedValues=false) {
+			if(self::detectXSSInArray($_POST,$overwriteWithCleanedValues)){
 				return true;
 			}
-			if(self::detectXSSInArray($_GET)){
+			if(self::detectXSSInArray($_GET,$overwriteWithCleanedValues)){
 				return true;
 			}
-			if(self::detectXSSInArray($_COOKIE)){
+			if(self::detectXSSInArray($_COOKIE,$overwriteWithCleanedValues)){
 				return true;
 			}
 			return false;
@@ -35,18 +36,21 @@ use voku\helper\AntiXSS;
 		 * each value for possible XSS. Function returns boolean if XSS is
 		 * found.
 		 *
-		 * @param array $array
-		 *  An array of data to check, this can be nested arrays.
+		 * @param array $array An array of data to check, this can be nested arrays.
+		 * @param boolean $overwriteWithCleanedValues true then clean the array
 		 * @return boolean
 		 *  True if XSS is detected, false otherwise
 		 */
-		public static function detectXSSInArray(array &$array) {
+		public static function detectXSSInArray(array &$array,$overwriteWithCleanedValues=false) {
 			foreach($array as $key=>$value) {
 				if(is_array($value)) {
 					return self::detectXSSInArray($array[$key]);
 				} else {
 					$antiXss = new AntiXSS();
-					$array[$key] = $antiXss->xss_clean($value);
+					$cleanItem = $antiXss->xss_clean($value);
+					if($overwriteWithCleanedValues){
+						$array[$key] = $cleanItem;
+					}
 					if($antiXss->isXssFound()){
 						return true;
 					}
