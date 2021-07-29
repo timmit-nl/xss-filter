@@ -40,7 +40,7 @@ class XSS_Filter
      * each value for possible XSS. Function returns boolean if XSS is
      * found.
      *
-     * @param array $array                     An array of data to check, this can be nested arrays.
+     * @param array $array                      An array of data to check, this can be nested arrays.
      * @param bool $overwriteWithCleanedValues true then clean the array.
      * @return bool True if XSS is detected, false otherwise.
      */
