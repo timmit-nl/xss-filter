@@ -13,6 +13,9 @@ use voku\helper\AntiXSS;
  */
 class XSS_Filter
 {
+    /** @var object interne class */
+    private static object $vokuAntiXSS;
+
     /**
      * Check GLOBALS
      *
@@ -50,12 +53,16 @@ class XSS_Filter
             if (is_array($value)) {
                 return self::detectXSSInArray($array[$key]);
             } else {
-                $antiXss = new AntiXSS();
-                $cleanItem = $antiXss->xss_clean($value);
+                if (!isset(self::$vokuAntiXSS)) {
+                    self::$vokuAntiXSS = new AntiXSS();
+                    self::$vokuAntiXSS->addEvilHtmlTags(array('img', 'a'));
+                }
+
+                $cleanItem = self::$vokuAntiXSS->xss_clean($value);
                 if ($overwriteWithCleanedValues) {
                     $array[$key] = $cleanItem;
                 }
-                if ($antiXss->isXssFound()) {
+                if (self::$vokuAntiXSS->isXssFound()) {
                     return true;
                 }
             }
