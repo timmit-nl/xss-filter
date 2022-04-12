@@ -56,6 +56,7 @@ class XSS_Filter
                 if (!isset(self::$vokuAntiXSS)) {
                     self::$vokuAntiXSS = new AntiXSS();
                     self::$vokuAntiXSS->addEvilHtmlTags(array('img', 'a', 'b', 'strong', 'i'));
+                    self::$vokuAntiXSS->setStripe4byteChars(true);
                 }
 
                 $cleanItem = self::$vokuAntiXSS->xss_clean($value);
