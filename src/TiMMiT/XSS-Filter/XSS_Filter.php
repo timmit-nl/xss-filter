@@ -58,13 +58,14 @@ class XSS_Filter
                     self::$vokuAntiXSS->addEvilHtmlTags(array('img', 'a', 'b', 'strong', 'i'));
                     self::$vokuAntiXSS->setStripe4byteChars(true);
                 }
-
-                $cleanItem = self::$vokuAntiXSS->xss_clean($value);
-                if ($overwriteWithCleanedValues) {
-                    $array[$key] = $cleanItem;
-                }
-                if (self::$vokuAntiXSS->isXssFound()) {
-                    return true;
+                if (is_string($value)) {
+                    $cleanItem = self::$vokuAntiXSS->xss_clean($value);
+                    if ($overwriteWithCleanedValues) {
+                        $array[$key] = $cleanItem;
+                    }
+                    if (self::$vokuAntiXSS->isXssFound()) {
+                        return true;
+                    }
                 }
             }
         }
