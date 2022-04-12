@@ -13,8 +13,8 @@ use voku\helper\AntiXSS;
  */
 class XSS_Filter
 {
-    /** @var object interne class */
-    private static object $vokuAntiXSS;
+    /** @var \voku\helper\AntiXSS interne class */
+    private static \voku\helper\AntiXSS $vokuAntiXSS;
 
     /**
      * Check GLOBALS
