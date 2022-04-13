@@ -6,8 +6,9 @@
     "license": "MIT",
     "require": {
         "voku/anti-xss": "^4.1.24",
-        "phpstan/phpstan": "^0.12.25",
-        "phpstan/phpstan-strict-rules": "^0.12.5",
+        "phpstan/phpstan": "^1.1",
+        "phpstan/phpstan-strict-rules": "^1.0",
+        "phpstan/phpstan-deprecation-rules":"^1.0",
         "sweetstackdigital/php-docblock-checker": "~1.10.6"
     },
     "autoload": {
