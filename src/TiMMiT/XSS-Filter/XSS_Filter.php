@@ -4,6 +4,8 @@
  * File that contains the XSS_Filter class
  */
 
+declare(strict_types=1);
+
 namespace TiMMiT;
 
 use voku\helper\AntiXSS;
