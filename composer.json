@@ -2,7 +2,7 @@
     "name": "timmit/xss-filter",
     "description": "basic XSS Filter, based on symfony xss filter",
     "keywords": ["xss", "filter"],
-    "version": "v2.0",
+    "version": "v3.0",
     "license": "MIT",
     "require": {
         "voku/anti-xss": "^4.1.24",
