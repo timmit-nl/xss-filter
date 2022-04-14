@@ -68,7 +68,7 @@ class XSS_Filter
             if (is_array($value)) {
                 return self::detectXSSInArray($array[$key]);
             } else {
-                self::loadVokuIfNeeded($blockAllHtmlField);
+                self::loadVokuAntiXXSIfNeeded($blockAllHtmlField);
 
                 if (is_string($value)) {
                     $cleanItem = self::$vokuAntiXSS->xss_clean($value);
@@ -91,7 +91,7 @@ class XSS_Filter
      *
      * @return bool True if vokuXSS needed to be loaded.
      */
-    private static function loadVokuIfNeeded(bool $blockAllHtmlField = null): bool
+    private static function loadVokuAntiXXSIfNeeded(bool $blockAllHtmlField = null): bool
     {
         if (is_null($blockAllHtmlField)) {
             $blockAllHtmlField = self::$blockAllHtmlField;
@@ -127,7 +127,7 @@ class XSS_Filter
      */
     public static function cleanString(string $value, bool $blockAllHtmlField = false): string
     {
-        self::loadVokuIfNeeded($blockAllHtmlField);
+        self::loadVokuAntiXXSIfNeeded($blockAllHtmlField);
 
         return self::$vokuAntiXSS->xss_clean($value);
     }
