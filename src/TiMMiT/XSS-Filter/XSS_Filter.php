@@ -120,7 +120,7 @@ class XSS_Filter
     /**
      * cleanString
      *
-     * @param string $value string that need to be cleaned
+     * @param string $value             string that need to be cleaned
      * @param bool $blockAllHtmlField true then block all known html fields
      *
      * @return string
