@@ -2,15 +2,16 @@
     "name": "timmit/xss-filter",
     "description": "basic XSS Filter, based on symfony xss filter",
     "keywords": ["xss", "filter"],
-    "version": "v3.0.3",
     "license": "MIT",
     "require": {
-        "voku/anti-xss": "^4.1.24",
+        "voku/anti-xss": "^4.1.24"
+    },
+    "require-dev": {
         "phpstan/phpstan": "^1.1",
         "phpstan/phpstan-strict-rules": "^1.0",
         "phpstan/phpstan-deprecation-rules":"^1.0",
-        "sweetstackdigital/php-docblock-checker": "~1.10.6"
-    },
+        "timmit/php-docblock-checker": "^1.11"
+	},
     "autoload": {
         "files": ["src/TiMMiT/XSS-Filter/XSS_Filter.php"]
     },
