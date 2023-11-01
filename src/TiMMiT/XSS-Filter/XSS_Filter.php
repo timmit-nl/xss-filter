@@ -61,17 +61,23 @@ class XSS_Filter
      * @param mixed[] $array                      An array of data to check, this can be nested arrays.
      * @param bool $overwriteWithCleanedValues true then clean the array.
      * @param null|bool $blockAllHtmlField          true then block all known html fields
+     * @param bool $checkKeys          true then check also key values if string
      *
      * @return bool True if XSS is detected, false otherwise.
      */
-    public static function detectXSSInArray(array &$array, bool $overwriteWithCleanedValues = false, ?bool $blockAllHtmlField = null): bool
+    public static function detectXSSInArray(array &$array, bool $overwriteWithCleanedValues = false, ?bool $blockAllHtmlField = null, bool $checkKeys = false): bool
     {
+        self::loadVokuAntiXXSIfNeeded($blockAllHtmlField);
         foreach ($array as $key => $value) {
+            if ($checkKeys && is_string($key)) {
+                $cleanItem = self::$vokuAntiXSS->xss_clean($key);
+                if (self::$vokuAntiXSS->isXssFound()) {
+                    return true;
+                }
+            }
             if (is_array($value)) {
                 return self::detectXSSInArray($array[$key]);
             } else {
-                self::loadVokuAntiXXSIfNeeded($blockAllHtmlField);
-
                 if (is_string($value)) {
                     $cleanItem = self::$vokuAntiXSS->xss_clean($value);
                     if ($overwriteWithCleanedValues) {
