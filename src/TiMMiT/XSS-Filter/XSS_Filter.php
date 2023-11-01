@@ -72,7 +72,7 @@ class XSS_Filter
         foreach ($array as $key => $value) {
             if ($checkKeys && is_string($key)) {
                 $cleanItem = self::$vokuAntiXSS->xss_clean($key);
-                if (self::$vokuAntiXSS->isXssFound()) {
+                if (true === self::$vokuAntiXSS->isXssFound()) {
                     return true;
                 }
             }
@@ -84,7 +84,7 @@ class XSS_Filter
                     if ($overwriteWithCleanedValues) {
                         $array[$key] = $cleanItem;
                     }
-                    if (self::$vokuAntiXSS->isXssFound()) {
+                    if (true === self::$vokuAntiXSS->isXssFound()) {
                         return true;
                     }
                 }
