@@ -35,7 +35,7 @@ class XSS_Filter
      *
      * @param bool $overwriteWithCleanedValues true then clean the GLOBAL array's
      * @param null|bool $blockAllHtmlField          true then block all known html fields
-     * @param bool $checkKeys          true then check also key values if string
+     * @param bool $checkKeys                  true then check also key values if string
      *
      * @return bool true if XSS is detected, false otherwise
      */
@@ -62,7 +62,7 @@ class XSS_Filter
      * @param mixed[] $array                      An array of data to check, this can be nested arrays.
      * @param bool $overwriteWithCleanedValues true then clean the array.
      * @param null|bool $blockAllHtmlField          true then block all known html fields
-     * @param bool $checkKeys          true then check also key values if string
+     * @param bool $checkKeys                  true then check also key values if string
      *
      * @return bool True if XSS is detected, false otherwise.
      */
