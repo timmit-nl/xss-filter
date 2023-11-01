@@ -35,18 +35,19 @@ class XSS_Filter
      *
      * @param bool $overwriteWithCleanedValues true then clean the GLOBAL array's
      * @param null|bool $blockAllHtmlField          true then block all known html fields
+     * @param bool $checkKeys          true then check also key values if string
      *
      * @return bool true if XSS is detected, false otherwise
      */
-    public static function check4XSSInRequestArrays(bool $overwriteWithCleanedValues = false, ?bool $blockAllHtmlField = null): bool
+    public static function check4XSSInRequestArrays(bool $overwriteWithCleanedValues = false, ?bool $blockAllHtmlField = null, bool $checkKeys = false): bool
     {
-        if (self::detectXSSInArray($_POST, $overwriteWithCleanedValues, $blockAllHtmlField)) {
+        if (self::detectXSSInArray($_POST, $overwriteWithCleanedValues, $blockAllHtmlField, $checkKeys)) {
             return true;
         }
-        if (self::detectXSSInArray($_GET, $overwriteWithCleanedValues, $blockAllHtmlField)) {
+        if (self::detectXSSInArray($_GET, $overwriteWithCleanedValues, $blockAllHtmlField, $checkKeys)) {
             return true;
         }
-        if (self::detectXSSInArray($_COOKIE, $overwriteWithCleanedValues, $blockAllHtmlField)) {
+        if (self::detectXSSInArray($_COOKIE, $overwriteWithCleanedValues, $blockAllHtmlField, $checkKeys)) {
             return true;
         }
         return false;
