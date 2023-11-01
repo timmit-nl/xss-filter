@@ -77,7 +77,7 @@ class XSS_Filter
                 }
             }
             if (is_array($value)) {
-                return self::detectXSSInArray($array[$key]);
+                return self::detectXSSInArray($array[$key], $overwriteWithCleanedValues, $blockAllHtmlField, $checkKeys);
             } else {
                 if (is_string($value)) {
                     $cleanItem = self::$vokuAntiXSS->xss_clean($value);
