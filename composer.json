@@ -7,10 +7,9 @@
         "voku/anti-xss": "^4.1"
     },
     "require-dev": {
-        "phpstan/phpstan": "^1.1",
-        "phpstan/phpstan-strict-rules": "^1.0",
-        "phpstan/phpstan-deprecation-rules":"^1.0",
-        "timmit/php-docblock-checker": "^1.11"
+        "phpstan/phpstan": "^1.9.4",
+        "phpstan/phpstan-deprecation-rules": "^1.0",
+        "phpstan/phpstan-strict-rules": "^1.1"    
 	},
     "autoload": {
         "files": ["src/TiMMiT/XSS-Filter/XSS_Filter.php"]
