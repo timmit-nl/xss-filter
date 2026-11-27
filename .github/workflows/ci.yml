@@ -1,0 +1,76 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  phpstan:
+    name: PHP static
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.1"
+          coverage: none
+          tools: composer
+
+      - name: Install dependencies
+        run: composer install --optimize-autoloader --no-interaction --no-progress
+
+      - name: Run PHPStan
+        run: |
+          set -o pipefail
+          touch ./CI
+          sh test/phpstan.sh | tee phpstan_results.txt
+
+      - name: Upload PHPStan results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phpstan-results
+          path: phpstan_results.txt
+          retention-days: 30
+
+  phpcs-docblocks:
+    name: PHP codesniffer DocBlocks
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.1"
+          coverage: none
+          tools: phpcs:3.13.6
+
+      - name: Run PHPCS
+        run: phpcs -s -p --colors --extensions=php --standard=.phpcs-docblock.xml --exclude=Generic.Files.LineLength,Squiz.Classes.ValidClassName ./src
+
+  phpcs:
+    name: PHP codesniffer
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.1"
+          coverage: none
+          tools: phpcs:3.13.6
+
+      - name: Run PHPCS
+        run: phpcs -s -p --colors --extensions=php --standard=.phpcs.xml --exclude=Generic.Files.LineLength,Squiz.Classes.ValidClassName ./src
